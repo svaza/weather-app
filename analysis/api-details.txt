@@ -1,0 +1,15 @@
+refer https://openweathermap.org/
+username - svaza
+
+get current weather info by city
+https://samples.openweathermap.org/data/2.5/weather?q=London&appid=adb9dd6b20cadd87d12b7df253187477
+
+get current weather info by cityid
+https://api.openweathermap.org/data/2.5/weather?id=2172797&appid=adb9dd6b20cadd87d12b7df253187477
+
+get current weather by lat,long
+https://api.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=adb9dd6b20cadd87d12b7df253187477
+
+
+similar api calls with parameters to get data for 5 days 3hrs
+https://api.openweathermap.org/data/2.5/forecast?q=London,us&appid=adb9dd6b20cadd87d12b7df253187477
