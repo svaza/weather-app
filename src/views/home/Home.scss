@@ -1,0 +1,40 @@
+
+.home-container {
+    margin: 40px 5px 5px 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    
+
+    .current-status {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .current-status__weather-ico {
+        font-size: 5em;
+        padding-bottom: 35px;
+        align-self: center;
+    }
+
+    .current-status__temp-info {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        p {
+            margin: 0px;
+        }
+        p.temp {
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        p.oth-det {
+            margin-left: 20px;
+            font-size: 1em;
+        }
+    }
+
+}
+
