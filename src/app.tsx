@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.scss';
 import Home from './views/home/Home';
-import Grid from '@material-ui/core/Grid';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Switch from '@material-ui/core/Switch';
