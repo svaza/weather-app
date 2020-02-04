@@ -1,0 +1,73 @@
+@import "../../sass/abstracts/placeholders";
+
+.current-weather-cont {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  padding: 0px 20px 20px 20px;
+
+  .bold {
+    font-weight: 500;
+  }
+
+  &:hover {
+    @include container-selection();
+    cursor: pointer;
+  }
+
+  .weather-ico {
+    align-self: center;
+    width: 100px;
+    height: 100px;
+  }
+
+  .temp-info {
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    align-items: baseline;
+
+    .sep {
+      margin: 0px 5px 0px 5px;
+      font-size: 16px;
+    }
+
+    p.temp {
+      font-size: 16px;
+
+      .feels_like {
+        margin-left: 2px;
+        font-style: italic;
+        font-size: 12px;
+        font-weight: normal;
+      }
+    }
+
+    p.oth-det {
+      font-size: 1em;
+    }
+  }
+
+  .loc {
+    display: flex;
+    flex-direction: row;
+    i {
+      font-size: 13px !important;
+    }
+  }
+
+  p.misc-info {
+    font-size: 10px;
+    align-self: center;
+    .gap {
+      margin: 0px 3px 0px 3px;
+    }
+    * {
+      font-size: 10px;
+    }
+  }
+
+  .misc-info--sep {
+    margin-top: 10px;
+  }
+}

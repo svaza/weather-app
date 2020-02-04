@@ -1,5 +1,7 @@
 import React from 'react';
 import './Home.scss';
+import CurrentWeather from './CurrentWeather';
+import { CurrentWeatherModel } from '../api-model';
 
 interface HomeProp {
 
@@ -32,42 +34,11 @@ export default class Home extends React.Component<HomeProp, HomeState> {
         return Math.floor(Math.random() * (max - min) + min);
     }
 
-    componentDidMount() {
-        setInterval(() => {
-            this.setState((prevState: HomeState, props: HomeProp) => {
-                return { wIndex: (prevState.wIndex === this._weatherIcons.length - 1 ? 0 : prevState.wIndex + 1) };
-            });
-        }, 1000);
-    }
-
-    componentWillUnmount() {
-        clearInterval(this._clearInterval);
-    }
-
     render() {
+        const currentWeather: any = {};
         return (
             <div className="home-container">
-                <div className="current-status">
-                    <img className="current-status__weather-ico" src={`https://openweathermap.org/img/wn/${this._weatherIcons[this.state.wIndex]}@2x.png`} alt="weather info"></img>
-                    <div className="current-status__temp-info">
-                        <p className="temp">
-                            26&deg;C
-                        </p>
-                        <p className="oth-det">
-                            Overcast 27/26&deg;C
-                        </p>
-                    </div>
-                    <div className="current-status__misc-info">
-                        <div>
-                            <p>Sunrise 7:30AM</p>
-                            <p>Sunset 8:00PM</p>
-                        </div>
-                        <div className="loc">
-                            <i className="material-icons">place</i> 
-                            <a href="#"><p>(19.0144, 72.8479)</p></a>
-                        </div>
-                    </div>
-                </div>
+                <CurrentWeather current={currentWeather}></CurrentWeather>
 
                 <div className="future-status">
                     <div className="future-status__item">

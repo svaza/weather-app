@@ -1,0 +1,6 @@
+@mixin container-selection() {
+    -moz-box-shadow: inset 0 0 5px #000000;
+    -webkit-box-shadow: inset 0 0 5px #000000;
+    box-shadow: inset 0 0 5px #000000;
+    border-radius: 10px;
+}

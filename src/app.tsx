@@ -3,7 +3,9 @@ import './App.scss';
 import Home from './views/home/Home';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Switch from '@material-ui/core/Switch';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import IconButton from '@material-ui/core/IconButton';
 
 interface AppProps {
@@ -33,9 +35,20 @@ export default class App extends React.Component<AppProps, AppState> {
                     </IconButton>
                     <h1 className="root-container__app-title">Mumbai, India</h1>
                     <div>
-                        <label>&deg;C</label>
-                        <Switch color="primary" />
-                        <label>&deg;F</label>
+                        <RadioGroup aria-label="position" name="position" row value="m">
+                            <FormControlLabel
+                                value="m"
+                                control={<Radio />}
+                                label="Metric"
+                                labelPlacement="start"
+                            />
+                            <FormControlLabel
+                                value="i"
+                                control={<Radio />}
+                                label="Imperial"
+                                labelPlacement="start"
+                            />
+                        </RadioGroup>
                     </div>
                 </Toolbar>
             </AppBar>
