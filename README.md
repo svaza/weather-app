@@ -1,12 +1,12 @@
 # Weather WebApp
+![Node.js CI](https://github.com/svaza/weather-app/workflows/Node.js%20CI/badge.svg)
 
 A webapp developed in react that displays all weather information in more user friendly way
 
-![Node.js CI](https://github.com/svaza/weather-app/workflows/Node.js%20CI/badge.svg)
+The development version of this app can be found at [WeatherWebApp](https://svaza.github.io/weather-app/site/index.html)
 
 ## Getting Started
 
-No installation required as such, just browse http:// to access it.
 For running it locally just do 
 ```
 npm install 
