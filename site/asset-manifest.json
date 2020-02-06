@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/svaza/weather-app/static/css/main.6a36e7ae.chunk.css",
+    "main.js": "/svaza/weather-app/static/js/main.57968ceb.chunk.js",
+    "main.js.map": "/svaza/weather-app/static/js/main.57968ceb.chunk.js.map",
+    "runtime-main.js": "/svaza/weather-app/static/js/runtime-main.9bc3e69f.js",
+    "runtime-main.js.map": "/svaza/weather-app/static/js/runtime-main.9bc3e69f.js.map",
+    "static/js/2.10d26810.chunk.js": "/svaza/weather-app/static/js/2.10d26810.chunk.js",
+    "static/js/2.10d26810.chunk.js.map": "/svaza/weather-app/static/js/2.10d26810.chunk.js.map",
+    "index.html": "/svaza/weather-app/index.html",
+    "precache-manifest.866cea68c7adb9345c4b41fc9730e203.js": "/svaza/weather-app/precache-manifest.866cea68c7adb9345c4b41fc9730e203.js",
+    "service-worker.js": "/svaza/weather-app/service-worker.js",
+    "static/css/main.6a36e7ae.chunk.css.map": "/svaza/weather-app/static/css/main.6a36e7ae.chunk.css.map",
+    "static/js/2.10d26810.chunk.js.LICENSE.txt": "/svaza/weather-app/static/js/2.10d26810.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.9bc3e69f.js",
+    "static/js/2.10d26810.chunk.js",
+    "static/css/main.6a36e7ae.chunk.css",
+    "static/js/main.57968ceb.chunk.js"
+  ]
+}
