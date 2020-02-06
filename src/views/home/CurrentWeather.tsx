@@ -31,7 +31,7 @@ export default class CurrentWeather extends React.Component<CurrentWeatherProp> 
                 <p className="misc-info">Sunrise 7:30AM <span className="gap"></span> Sunset 8:00PM</p>
                 <p className="loc misc-info">
                     <i className="material-icons">place</i>
-                    <a href="#"><p>(19.0144, 72.8479)</p></a>
+                    <p>(19.0144, 72.8479)</p>
                 </p>
             </div>
         );

@@ -1,7 +1,6 @@
 import React from 'react';
 import './Home.scss';
 import CurrentWeather from './CurrentWeather';
-import { CurrentWeatherModel } from '../api-model';
 
 interface HomeProp {
 
