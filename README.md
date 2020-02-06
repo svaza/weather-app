@@ -2,6 +2,8 @@
 
 A webapp developed in react that displays all weather information in more user friendly way
 
+![Node.js CI](https://github.com/svaza/weather-app/workflows/Node.js%20CI/badge.svg)
+
 ## Getting Started
 
 No installation required as such, just browse http:// to access it.
