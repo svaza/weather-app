@@ -92,7 +92,7 @@ function AppTitle() {
     return (
         <div className="app-title">
             <h1>{currentWeather ? (currentWeather as CurrentWeatherModel).name : ''}</h1>
-            <p>{currentWeather ? `data as on ${dataAsOn}` : ''}</p>
+            <p>{currentWeather ? `data as on ${dataAsOn.toDateString() + ' ' + dataAsOn.toLocaleTimeString()}` : ''}</p>
         </div>
     );
 }
