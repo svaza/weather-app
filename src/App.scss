@@ -1,5 +1,18 @@
 
-.root-container__app-title {
-    font-size: 16px;
-    flex-grow: 1;
+.root-container {
+    .app-title {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: row;
+        align-items: baseline;
+        h1{
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        p{
+            font-style: italic;
+        }
+    }
+    
+    
 }

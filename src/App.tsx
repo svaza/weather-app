@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import './App.scss';
 import Home from './views/home/Home';
 import AppBar from '@material-ui/core/AppBar';
@@ -7,62 +7,92 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import IconButton from '@material-ui/core/IconButton';
+import { ApiDataContext, AppDataStoreContext } from './Context';
+import { WeatherLocation } from './app.model';
+import { CurrentWeatherModel, ForecastModel } from './views/api-model';
+import { AppDataStore } from './AppDataStore';
+import { ApiDataService } from './ApiDataService';
 
-interface AppProps {
-    input1: string;
+interface AppViewModel {
+    currentLocation: WeatherLocation;
+    currentWeather: CurrentWeatherModel;
+    currentForecast: ForecastModel;
 }
+export default function App() {
 
-interface AppState {
-    state1: number;
-}
+    const [appViewModel, setViewModel] = useState();
+    const apiDataService: ApiDataService = useContext(ApiDataContext);
+    const currentWeather: CurrentWeatherModel = appViewModel ? appViewModel.currentWeather : null;
+    const currentForecastWeather: ForecastModel = appViewModel ? appViewModel.currentForecast : null;
 
-export default class App extends React.Component<AppProps, AppState> {
-
-    constructor(props: AppProps) {
-        super(props);
-        this.state = {
-            state1: 123
-        };
+    if (navigator.geolocation && !appViewModel) {
+        navigator.geolocation.getCurrentPosition(position => {
+            const newAppViewModel: AppViewModel = {} as any;
+            newAppViewModel.currentLocation = { lat: position.coords.latitude, lon: position.coords.longitude, city: '' };
+            apiDataService.getCurrentWeatherData(newAppViewModel.currentLocation).then(model => {
+                newAppViewModel.currentWeather = model;
+                apiDataService.getCurrentForecastWeatherData(newAppViewModel.currentLocation).then(forecast => {
+                    newAppViewModel.currentForecast = forecast;
+                    setViewModel(newAppViewModel);
+                });
+            });
+        });
+    } else {
+        // geo location not enabled, alert user
     }
 
-    render() {
-
-        const appHeader: JSX.Element = (
-            <AppBar position="static">
-                <Toolbar>
-                    <IconButton edge="start" color="inherit" aria-label="menu">
-                        <i className="material-icons">menu</i>
-                    </IconButton>
-                    <h1 className="root-container__app-title">Mumbai, India</h1>
-                    <div>
-                        <RadioGroup aria-label="position" name="position" row value="m">
-                            <FormControlLabel
-                                value="m"
-                                control={<Radio />}
-                                label="Metric"
-                                labelPlacement="start"
-                            />
-                            <FormControlLabel
-                                value="i"
-                                control={<Radio />}
-                                label="Imperial"
-                                labelPlacement="start"
-                            />
-                        </RadioGroup>
-                    </div>
-                </Toolbar>
-            </AppBar>
-        );
-
-        return (
-            <div className="root-container">
-                {appHeader}
+    const appHeader: JSX.Element = (
+        <AppBar position="static">
+            <Toolbar>
+                <IconButton edge="start" color="inherit" aria-label="menu">
+                    <i className="material-icons">menu</i>
+                </IconButton>
+                <AppTitle></AppTitle>
                 <div>
-                    <Home></Home>
+                    <RadioGroup aria-label="position" name="position" row value="m">
+                        <FormControlLabel
+                            value="m"
+                            control={<Radio />}
+                            label="Metric"
+                            labelPlacement="start"
+                        />
+                    </RadioGroup>
                 </div>
+            </Toolbar>
+        </AppBar>
+    );
+
+    return (
+        <div className="root-container">
+            {appHeader}
+            <div>
+                <Home currentWeather={currentWeather} forecast={currentForecastWeather}></Home>
             </div>
+        </div>
+    );
 
-        );
+}
+
+function AppTitle() {
+    const [currentWeather, setCurrentWeather] = useState();
+    const appDataStore: AppDataStore = useContext(AppDataStoreContext);
+    let dataAsOn = new Date(1);
+    if(currentWeather) {
+        dataAsOn.setUTCSeconds((currentWeather as CurrentWeatherModel).dt);
     }
+    useEffect(() => {
+        const subscription = appDataStore.currentWeather$.subscribe((model) => {
+            setCurrentWeather(model);
+        });
+        return () => {
+            subscription.unsubscribe();
+        };
+    });
 
+    return (
+        <div className="app-title">
+            <h1>{currentWeather ? (currentWeather as CurrentWeatherModel).name : ''}</h1>
+            <p>{currentWeather ? `data as on ${dataAsOn}` : ''}</p>
+        </div>
+    );
 }

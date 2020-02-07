@@ -2,5 +2,14 @@ import ReactDOM from 'react-dom';
 import React from 'react';
 import App from './App';
 import './sass/main.scss';
+import { ApiDataContext, AppDataStoreContext, apiDataService, appDataStore } from './Context';
 
-ReactDOM.render(<App input1='ss'></App>, document.getElementById('app-root'));
+ReactDOM.render(
+    (
+        <ApiDataContext.Provider value={apiDataService}>
+            <AppDataStoreContext.Provider value={appDataStore}>
+                <App />
+            </AppDataStoreContext.Provider>
+        </ApiDataContext.Provider>
+    ),
+    document.getElementById('app-root'));
