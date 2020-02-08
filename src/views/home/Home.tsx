@@ -3,7 +3,7 @@ import './Home.scss';
 import CurrentWeather from './CurrentWeather';
 import { CurrentWeatherModel, ForecastModel } from '../api-model';
 import { WeatherItem } from './WeatherItem';
-import { ForecastHelper } from './ForecastHelper';
+import { ForecastHelper } from '../ForecastHelper';
 
 interface HomeProp {
     currentWeather: CurrentWeatherModel;

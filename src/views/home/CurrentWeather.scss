@@ -6,6 +6,11 @@
   align-self: center;
   padding: 0px 20px 20px 20px;
 
+  .title {
+    align-self: center;
+    margin-top: 10px;
+  }
+
   .bold {
     font-weight: 500;
   }
@@ -71,9 +76,4 @@
     margin-top: 10px;
   }
 
-  .misc-info--note {
-    font-style: italic;
-    align-self: flex-start !important;
-    margin-top: 20px;
-  }
 }

@@ -13,13 +13,16 @@ import { CurrentWeatherModel, ForecastModel } from './views/api-model';
 import { AppDataStore } from './AppDataStore';
 import { ApiDataService } from './ApiDataService';
 import { AppAlertDialog } from './views/AppAlertDialog';
+import { Switch, Route, withRouter, RouteComponentProps, useLocation, useHistory } from 'react-router-dom';
+import { WeatherDay } from './views/day/WeatherDay';
 
 interface AppViewModel {
     currentLocation: WeatherLocation;
     currentWeather: CurrentWeatherModel;
     currentForecast: ForecastModel;
 }
-export default function App() {
+export default withRouter(App);
+export function App() {
 
     const [appViewModel, setViewModel] = useState();
     let [openGeoLocationRejectionAlert, setOpenGeoLocationRejectionAlert] = useState(false);
@@ -49,13 +52,62 @@ export default function App() {
         }
     }, [appViewModel, openGeoLocationRejectionAlert, openGeoLocationNotSupportedAlert, apiDataService]);
 
+    return (
+        <div className="root-container top-level-containers">
+            <HeaderWithRouter />
+            <div className="content">
+                <Switch>
+                    <Route path="/day/:dt">
+                        <WeatherDay></WeatherDay>
+                    </Route>
+                    <Route path="/">
+                        <Home currentWeather={currentWeather} forecast={currentForecastWeather}></Home>
+                    </Route>
+                </Switch>
+            </div>
+            <div className="footer">
+                <Footer />
+            </div>
+            <AppAlertDialog open={openGeoLocationRejectionAlert}
+                title="Allow location access">
+                <span>App needs access to your current location to get your geo coordinates, However it seems like you have dsabled or denied it</span>
+            </AppAlertDialog>
+            <AppAlertDialog open={openGeoLocationNotSupportedAlert}
+                title="Geolocation not supported">
+                <span>It seems like you are using a crapy old device or you might have disabled geolocation</span>
+            </AppAlertDialog>
+        </div>
+    );
+}
 
+const HeaderWithRouter = withRouter(AppHeader);
+function AppHeader(props: RouteComponentProps) {
+    const location = useLocation();
+    const history = useHistory();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [tempFlag, setTempFlag] = useState({});
+    useEffect(() => {
+        const unlisten = props.history.listen((location) => {
+            setTempFlag({});
+        });
 
-    const appHeader: JSX.Element = (
+        return () => {
+            unlisten();
+        };
+    });
+    function onButtonClick() {
+        if(location.pathname === '/') {
+            // handle menu
+        } else {
+            history.goBack();
+        }
+    }
+
+    return (
         <AppBar position="static">
             <Toolbar>
-                <IconButton edge="start" color="inherit" aria-label="menu">
-                    <i className="material-icons">menu</i>
+                <IconButton edge="start" color="inherit" aria-label="menu" onClick={onButtonClick}>
+                    <i className="material-icons">{location.pathname === '/' ? 'menu' : 'arrow_back'}</i>
                 </IconButton>
                 <AppTitle></AppTitle>
                 <div>
@@ -71,30 +123,12 @@ export default function App() {
             </Toolbar>
         </AppBar>
     );
-
-    return (
-        <div className="root-container">
-            {appHeader}
-            <div>
-                <Home currentWeather={currentWeather} forecast={currentForecastWeather}></Home>
-            </div>
-            <AppAlertDialog open={openGeoLocationRejectionAlert}
-                title="Allow location access">
-                <span>App needs access to your current location to get your geo coordinates, However it seems like you have dsabled or denied it</span>
-            </AppAlertDialog>
-            <AppAlertDialog open={openGeoLocationNotSupportedAlert}
-                title="Geolocation not supported">
-                <span>It seems like you are using a crapy old device or you might have disabled geolocation</span>
-            </AppAlertDialog>
-        </div>
-    );
-
 }
 
 function AppTitle() {
     const [currentWeather, setCurrentWeather] = useState();
     const appDataStore: AppDataStore = useContext(AppDataStoreContext);
-    
+
     useEffect(() => {
         const subscription = appDataStore.currentWeather$.subscribe((model) => {
             setCurrentWeather(model);
@@ -111,3 +145,8 @@ function AppTitle() {
     );
 }
 
+function Footer() {
+    return (
+        <p>&lt;/&gt; with &hearts; by <a href="https://twitter.com/iamsvaza" rel="noopener noreferrer" target="_blank">svaza</a></p>
+    );
+}

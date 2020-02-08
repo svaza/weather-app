@@ -1,18 +1,27 @@
-
 .root-container {
-    .app-title {
-        flex-grow: 1;
-        display: flex;
-        flex-direction: row;
-        align-items: baseline;
-        h1{
-            font-size: 16px;
-            margin-right: 10px;
-        }
-        p{
-            font-style: italic;
-        }
+  display: flex;
+  flex-direction: column;
+
+  .app-title {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    h1 {
+      font-size: 16px;
+      margin-right: 10px;
     }
-    
-    
+    p {
+      font-style: italic;
+    }
+  }
+
+  .content {
+    flex: 1 0 auto;
+  }
+
+  .footer {
+    flex-shrink: 0;
+    align-self: center;
+  }
 }
