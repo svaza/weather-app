@@ -14,6 +14,8 @@ export default class CurrentWeather extends React.Component<CurrentWeatherProp> 
         sunriseDate.setUTCSeconds(this.props.current.sys.sunrise);
         const sunsetDate = new Date(1);
         sunsetDate.setUTCSeconds(this.props.current.sys.sunset);
+        let dataAsOn = new Date(1);
+        dataAsOn.setUTCSeconds(this.props.current.dt);
 
         return (
             <div className="current-weather-cont">
@@ -33,11 +35,12 @@ export default class CurrentWeather extends React.Component<CurrentWeatherProp> 
 
                 <p className="misc-info misc-info--sep">Pressure {this.props.current.main.pressure} hPa <span className="gap"></span> Humidity {this.props.current.main.humidity}%</p>
                 <p className="misc-info">Wind speed {this.props.current.wind.speed} mtr/sec <span className="gap"></span> Wind direction {this.props.current.wind.deg}&deg;(meteorological)</p>
-                <p className="misc-info">Sunrise {sunriseDate.getHours() + ':' + sunriseDate.getMinutes()}AM <span className="gap"></span> Sunset {sunsetDate.getHours() + ':' + sunsetDate.getMinutes()}PM</p>
+                <p className="misc-info">Sunrise {sunriseDate.getHours() + ':' + sunriseDate.getMinutes()} <span className="gap"></span> Sunset {sunsetDate.getHours() + ':' + sunsetDate.getMinutes()}</p>
                 <p className="loc misc-info">
                     <i className="material-icons">place</i>
                     <span>({this.props.current.coord.lat}, {this.props.current.coord.lon})</span>
                 </p>
+                <p className="misc-info misc-info--note"><sup>**</sup>Data as on {dataAsOn.toDateString() + ' ' + dataAsOn.toLocaleTimeString()}</p>
             </div>
         );
     }
