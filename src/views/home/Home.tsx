@@ -18,10 +18,13 @@ export default function Home(props: HomeProp) {
     }
 
     const futureItems: React.ReactNode[] = [];
-    ForecastHelper.getDistinctForecastItems(props.currentWeather, props.forecast)
-        .forEach((item) => {
-            futureItems.push((<WeatherItem item={item} key={item.dt}></WeatherItem>));
-        });
+    if (props.forecast) {
+        ForecastHelper.getDistinctForecastItems(props.currentWeather, props.forecast)
+            .forEach((item) => {
+                futureItems.push((<WeatherItem item={item} key={item.dt}></WeatherItem>));
+            });
+    }
+
 
     return (
         <div className="home-container">
