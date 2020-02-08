@@ -12,6 +12,7 @@ import { WeatherLocation } from './app.model';
 import { CurrentWeatherModel, ForecastModel } from './views/api-model';
 import { AppDataStore } from './AppDataStore';
 import { ApiDataService } from './ApiDataService';
+import { AppAlertDialog } from './views/AppAlertDialog';
 
 interface AppViewModel {
     currentLocation: WeatherLocation;
@@ -21,25 +22,34 @@ interface AppViewModel {
 export default function App() {
 
     const [appViewModel, setViewModel] = useState();
+    let [openGeoLocationRejectionAlert, setOpenGeoLocationRejectionAlert] = useState(false);
+    let [openGeoLocationNotSupportedAlert, setOpenGeoLocationNotSupportedAlert] = useState(false);
     const apiDataService: ApiDataService = useContext(ApiDataContext);
     const currentWeather: CurrentWeatherModel = appViewModel ? appViewModel.currentWeather : null;
     const currentForecastWeather: ForecastModel = appViewModel ? appViewModel.currentForecast : null;
 
-    if (navigator.geolocation && !appViewModel) {
-        navigator.geolocation.getCurrentPosition(position => {
-            const newAppViewModel: AppViewModel = {} as any;
-            newAppViewModel.currentLocation = { lat: position.coords.latitude, lon: position.coords.longitude, city: '' };
-            apiDataService.getCurrentWeatherData(newAppViewModel.currentLocation).then(model => {
-                newAppViewModel.currentWeather = model;
-                apiDataService.getCurrentForecastWeatherData(newAppViewModel.currentLocation).then(forecast => {
-                    newAppViewModel.currentForecast = forecast;
-                    setViewModel(newAppViewModel);
+    useEffect(() => {
+        // make sure that you try to access geolocation and weather API only once when app loads
+        if (navigator.geolocation && !appViewModel && !openGeoLocationRejectionAlert && !openGeoLocationNotSupportedAlert) {
+            navigator.geolocation.getCurrentPosition(position => {
+                const newAppViewModel: AppViewModel = {} as any;
+                newAppViewModel.currentLocation = { lat: position.coords.latitude, lon: position.coords.longitude, city: '' };
+                apiDataService.getCurrentWeatherData(newAppViewModel.currentLocation).then(model => {
+                    newAppViewModel.currentWeather = model;
+                    apiDataService.getCurrentForecastWeatherData(newAppViewModel.currentLocation).then(forecast => {
+                        newAppViewModel.currentForecast = forecast;
+                        setViewModel(newAppViewModel);
+                    });
                 });
+            }, () => {
+                setOpenGeoLocationRejectionAlert(true);
             });
-        });
-    } else {
-        // geo location not enabled, alert user
-    }
+        } else if (!navigator.geolocation) {
+            setOpenGeoLocationNotSupportedAlert(true);
+        }
+    }, [appViewModel, openGeoLocationRejectionAlert, openGeoLocationNotSupportedAlert, apiDataService]);
+
+
 
     const appHeader: JSX.Element = (
         <AppBar position="static">
@@ -68,6 +78,14 @@ export default function App() {
             <div>
                 <Home currentWeather={currentWeather} forecast={currentForecastWeather}></Home>
             </div>
+            <AppAlertDialog open={openGeoLocationRejectionAlert}
+                title="Allow location access">
+                <span>App needs access to your current location to get your geo coordinates, However it seems like you have dsabled or denied it</span>
+            </AppAlertDialog>
+            <AppAlertDialog open={openGeoLocationNotSupportedAlert}
+                title="Geolocation not supported">
+                <span>It seems like you are using a crapy old device or you might have disabled geolocation</span>
+            </AppAlertDialog>
         </div>
     );
 
@@ -77,7 +95,7 @@ function AppTitle() {
     const [currentWeather, setCurrentWeather] = useState();
     const appDataStore: AppDataStore = useContext(AppDataStoreContext);
     let dataAsOn = new Date(1);
-    if(currentWeather) {
+    if (currentWeather) {
         dataAsOn.setUTCSeconds((currentWeather as CurrentWeatherModel).dt);
     }
     useEffect(() => {
@@ -96,3 +114,4 @@ function AppTitle() {
         </div>
     );
 }
+
