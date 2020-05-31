@@ -3,7 +3,7 @@
 
 A webapp developed in react that displays all weather information in more user friendly way
 
-The development version of this app can be found at [WeatherWebApp](https://svaza.github.io/weather-app/site/index.html)
+The deployed version of this app can be found at [WeatherWebApp](https://svaza.github.io/weather-app/site/index.html)
 
 ## Getting Started
 
